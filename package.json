@@ -1,0 +1,56 @@
+{
+  "name": "n8n-nodes-scantitan",
+  "version": "0.1.3",
+  "description": "ScanTitan website scans, findings, monitoring and event triggers",
+  "license": "MIT",
+  "homepage": "https://scantitan.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scantitan/n8n-nodes-scantitan.git"
+  },
+  "bugs": {
+    "url": "https://github.com/scantitan/n8n-nodes-scantitan/issues"
+  },
+  "keywords": [
+    "n8n-community-node-package"
+  ],
+  "author": {
+    "name": "ScanTitan",
+    "email": "info@scantitan.com"
+  },
+  "scripts": {
+    "build": "n8n-node build",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "release": "n8n-node release",
+    "test": "node --test test/*.test.cjs",
+    "prepublishOnly": "n8n-node prerelease"
+  },
+  "files": [
+    "dist",
+    "examples"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": true,
+    "credentials": [
+      "dist/credentials/ScanTitanApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/ScanTitan/ScanTitan.node.js",
+      "dist/nodes/ScanTitan/ScanTitanTrigger.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "0.54.6",
+    "n8n-workflow": "2.16.0",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
