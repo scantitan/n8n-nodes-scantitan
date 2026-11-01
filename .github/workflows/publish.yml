@@ -30,8 +30,6 @@ jobs:
       - run: npm test
       - name: Publish with official n8n release checks and npm provenance
         run: npm run release
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
   verify-publication:
     needs: publish
     runs-on: ubuntu-latest
