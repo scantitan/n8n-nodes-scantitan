@@ -5,7 +5,9 @@ Maintainer and support: info@scantitan.com. Never send credentials or private sc
 ScanTitan community nodes for website owners, developers, agencies, enterprise teams, MSPs and MSSPs.
 
 ## Setup
-Add and verify websites in ScanTitan, select a plan, then create an **n8n** credential under **Account & plan → Connected apps**. Store it in n8n's ScanTitan API credential. Choose assets:read, scans:read, scans:run, monitoring:read and events:read as needed.
+Connected apps and integrations require an active **Business or Consultant** ScanTitan plan. Free and Professional plans do not include connected-app access. Installing this connector is free; scans follow the plan allowance. Consultant does not include ongoing monitoring.
+
+Add and verify websites in ScanTitan, select Business or Consultant, then create an **n8n** credential under **Account & plan → Connected apps**. Store it in n8n's ScanTitan API credential. Choose assets:read, scans:read, scans:run, monitoring:read and events:read as needed.
 
 The ScanTitan node lists and adds websites, verifies ownership, starts or cancels scans, gets status, retrieves paginated findings and shows plan-included monitoring. Each output is the complete API response in one item: data plus pagination metadata. Get Findings returns one page; increment Page through meta.last_page. A scan must be Completed before retrieving findings; use Get Scan with an n8n Wait loop first.
 
