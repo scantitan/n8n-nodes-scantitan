@@ -21,9 +21,9 @@ The polling trigger supports scan.completed, finding.opened/updated/resolved and
 Node 24; npm ci; npm run build; npm run lint; npm test.
 No external runtime dependencies, file access or environment access in the nodes. The API URL defaults to ScanTitan Cloud. Use your deployment's HTTPS integration API address for staging or self-hosted use. HTTP URLs, embedded credentials, query parameters and fragments are rejected. Credentials are restricted to the configured origin and redirects are disabled, including credential tests.
 
-The ScanTitan Cloud connected-app service is live. This package is not yet published on npm or verified by n8n. Public source: https://github.com/scantitan/n8n-nodes-scantitan. Publication runs through GitHub Actions with npm provenance; n8n Cloud discovery requires approval through the n8n Creator Portal.
+The ScanTitan Cloud connected-app service is live. Install the public package from https://www.npmjs.com/package/n8n-nodes-scantitan. Public source: https://github.com/scantitan/n8n-nodes-scantitan. Releases use GitHub Actions with npm provenance. n8n Cloud verification is pending review through the n8n Creator Portal.
 
-The public repository's .github/workflows/publish.yml runs the official n8n release command, then scans the published package and its provenance in a separate job. Configure the npm-release environment and npm trusted publisher with direct publish permission. A new npm package needs its first publication from this workflow before trusted publishing can be configured; use a temporary, appropriately scoped bootstrap credential if required, then remove it after trusted publishing succeeds. No publisher credentials are included in this package.
+The public repository's .github/workflows/publish.yml runs the official n8n release command, then scans the published package and its provenance in a separate job. Publishing uses package-specific npm trust for this repository's publish.yml workflow and npm-release environment. The workflow does not read a persistent npm publishing token. Registry processing and provenance availability are retried for up to seven minutes before verification fails. No publisher credentials are included in this package.
 
 Official requirements: https://docs.n8n.io/connect/create-nodes/build-your-node/reference/verification-guidelines.md
 

@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-scantitan",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "ScanTitan website scans, findings, monitoring and event triggers",
   "license": "MIT",
   "homepage": "https://scantitan.com",
