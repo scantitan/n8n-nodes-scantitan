@@ -1,0 +1,53 @@
+name: Publish ScanTitan n8n package
+on:
+  push:
+    tags: ['v*.*.*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  publish:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    environment: npm-release
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Verify publisher, repository and release tag
+        run: node scripts/validate-publish.cjs
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: npm test
+      - name: Publish with official n8n release checks and npm provenance
+        run: npm run release
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  verify-publication:
+    needs: publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Install official n8n verification tool separately
+        run: npm install --prefix "$RUNNER_TEMP/scantitan-scanner" --no-save --ignore-scripts --no-audit --no-fund @n8n/scan-community-package@0.41.1
+      - name: Verify published package and provenance
+        run: node scripts/verify-published-package.mjs "$RUNNER_TEMP/scantitan-scanner"
+
