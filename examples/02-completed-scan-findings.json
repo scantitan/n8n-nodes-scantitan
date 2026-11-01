@@ -1,0 +1,61 @@
+{
+  "name": "ScanTitan - retrieve completed scan findings",
+  "nodes": [
+    {
+      "id": "scantitan-events",
+      "name": "ScanTitan Trigger",
+      "type": "n8n-nodes-scantitan.scanTitanTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "events": [
+          "scan.completed"
+        ],
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "findings",
+      "name": "Get Findings",
+      "type": "n8n-nodes-scantitan.scanTitan",
+      "typeVersion": 1,
+      "position": [
+        260,
+        0
+      ],
+      "parameters": {
+        "resource": "scan",
+        "operation": "findings",
+        "scanId": "={{ $json.data.scan_id }}",
+        "page": 1,
+        "limit": 100
+      }
+    }
+  ],
+  "connections": {
+    "ScanTitan Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Findings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}

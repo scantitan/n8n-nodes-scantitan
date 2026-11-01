@@ -1,0 +1,63 @@
+{
+  "name": "ScanTitan - prepare finding and incident notifications",
+  "nodes": [
+    {
+      "id": "scantitan-events",
+      "name": "ScanTitan Trigger",
+      "type": "n8n-nodes-scantitan.scanTitanTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "events": [
+          "finding.opened",
+          "finding.updated",
+          "finding.resolved",
+          "monitor.alert.opened",
+          "monitor.alert.updated",
+          "monitor.alert.resolved"
+        ],
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "message",
+      "name": "Prepare Notification",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        260,
+        0
+      ],
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ { deduplication_key: $json.id, event_type: $json.type, website_id: $json.asset_id, details: $json.data, observed_at: $json.observed_at } }}"
+      }
+    }
+  ],
+  "connections": {
+    "ScanTitan Trigger": {
+      "main": [
+        [
+          {
+            "node": "Prepare Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}

@@ -1,0 +1,49 @@
+{
+  "name": "ScanTitan - request a website scan",
+  "nodes": [
+    {
+      "id": "manual",
+      "name": "Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "scan",
+      "name": "Start Scan",
+      "type": "n8n-nodes-scantitan.scanTitan",
+      "typeVersion": 1,
+      "position": [
+        260,
+        0
+      ],
+      "parameters": {
+        "resource": "scan",
+        "operation": "start",
+        "assetId": "REPLACE_WITH_SELECTED_WEBSITE_ID",
+        "idempotencyKey": "={{ 'n8n-' + $execution.id }}"
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Start Scan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}
